@@ -23,10 +23,10 @@ do
     EXTRA_LDFLAGS="-arch $ARCH --sysroot=$SYSROOT"
     case $ARCH in
         armv6)
-            EXTRA_FLAGS="--target=armv6-darwin-gcc"
+            EXTRA_FLAGS="--host=arm-apple-darwin --enable-pic --disable-asm"
             ;;
         armv7)
-            EXTRA_FLAGS="--target=armv7-darwin-gcc"
+            EXTRA_FLAGS="--host=arm-apple-darwin --enable-pic"
             ;;
         i386)
             ;;
