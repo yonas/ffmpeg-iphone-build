@@ -40,6 +40,7 @@ do
         CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libxvid --extra-ldflags=-L$XVID_DIST/lib --extra-cflags=-I$XVID_DIST/include"
     fi
 
+    # Add vorbis if exists
 #    OGG_DIST="$SCRIPT_DIR/ogg-$ARCH/dist"
     VORBIS_DIST="$SCRIPT_DIR/vorbis-$ARCH/dist"
     if [ -d "$VORBIS_DIST" ]; then
@@ -47,9 +48,16 @@ do
         CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libvorbis --extra-ldflags=-L$VORBIS_DIST/lib --extra-cflags=-I$VORBIS_DIST/include"
     fi
 
+    # Add vpx if exists
     VPX_DIST="$SCRIPT_DIR/vpx-$ARCH/dist"
     if [ -d "$VPX_DIST" ]; then
         CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libvpx --extra-ldflags=-L$VPX_DIST/lib --extra-cflags=-I$VPXE_DIST/include"
+    fi
+
+    # Add lame if exists
+    LAME_DIST="$SCRIPT_DIR/lame-$ARCH/dist"
+    if [ -d "$LAME_DIST" ]; then
+        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libmp3lame --extra-ldflags=-L$LAME_DIST/lib --extra-cflags=-I$LAME_DIST/include"
     fi
 
     # Use this to set your own build paths
