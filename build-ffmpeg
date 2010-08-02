@@ -50,7 +50,7 @@ do
     # Add vpx if exists
     VPX_DIST="$SCRIPT_DIR/vpx-$ARCH/dist"
     if [ -d "$VPX_DIST" ]; then
-        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libvpx --extra-ldflags=-L$VPX_DIST/lib --extra-cflags=-I$VPXE_DIST/include"
+        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libvpx --extra-ldflags=-L$VPX_DIST/lib --extra-cflags=-I$VPX_DIST/include"
     fi
 
     # Add lame if exists

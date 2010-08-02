@@ -2,7 +2,7 @@
 
 set -e
 
-LIBS="ffmpeg x264 xvid"
+LIBS="ffmpeg x264 xvid lame vorbis ogg vpx"
 
 ARCHS="armv6 armv7 i386"
 
