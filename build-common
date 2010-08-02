@@ -2,6 +2,8 @@
 
 ARCHS=${ARCHS:-"armv6 armv7 i386"}
 
+PATH=$SCRIPT_DIR:$PATH
+
 case $ARCH in
     i386)
         CC=/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/i686-apple-darwin10-gcc-4.2.1
