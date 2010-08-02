@@ -2,6 +2,54 @@
 
 set -e
 
-LIBRARY=ffmpeg
+LIBS="ffmpeg x264 xvid"
 
-. combine-libs-common
+ARCHS="armv6 armv7 i386"
+
+
+for LIBRARY in $LIBS
+do
+
+    # Find an arch that exists
+    for ARCH in $ARCHS
+    do
+        if [ -d $LIBRARY-$ARCH ]
+        then
+            MAIN_ARCH=$LIBRARY-$ARCH
+        fi
+    done
+
+    if [ -z "$MAIN_ARCH" ]
+    then
+        continue
+    fi
+
+    OUTPUT_DIR="$LIBRARY-uarch"
+
+    mkdir -p $OUTPUT_DIR/lib $OUTPUT_DIR/include $OUTPUT_DIR/share
+
+    for LIB in $LIBRARY-$MAIN_ARCH/dist/lib/*.a
+    do
+        LIPO_CREATE=""
+        for ARCH in $ARCHS
+        do
+            if [ -d $LIBRARY-$ARCH ]
+            then
+                LIPO_CREATE="$LIPO_CREATE-arch $ARCH $LIBRARY-$ARCH/dist/lib/$LIB "
+            fi
+        done
+        OUTPUT="$OUTPUT_DIR/lib/$LIB"
+        echo "Creating: $OUTPUT"
+        lipo -create $LIPO_CREATE -output $OUTPUT
+        lipo -info $OUTPUT
+    done
+
+    echo "Copying headers from $LIBRARY-$MAIN_ARCH..."
+    cp -R $LIBRARY-$MAIN_ARCH/dist/include/* $OUTPUT_DIR/include
+
+    if [ -d $LIBRARY-$MAIN_ARCH/dist/share ]
+    then
+        echo "Copying share from $LIBRARY-$MAIN_ARCH..."
+        cp -R $LIBRARY-$MAIN_ARCH/dist/share/* $OUTPUT_DIR/share
+    fi
+done
