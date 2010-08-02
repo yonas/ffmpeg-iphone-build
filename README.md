@@ -2,23 +2,18 @@ Build scripts for ffmpeg on iPhone SDK 3.0 (and iPhone Simulator SDK).
 
 ## Scripts 
 
-- `build-[arch]`: Build scripts for each arch; Run these first and then `combine-ffmpeg-libs`
+- `build-ffmpeg`: Build script for ffmpeg; Run this first and then `combine-libs`
 - `combine-libs`: Creates universal binaries; Runs lipo -create on each of the ffmpeg static libs
 
-- `build-x264-[arch]`: x264 build scripts for each arch; Run these before normal build script to include x264 support
-- `combine-x264-libs`: Creates universal binaries; Runs lipo -create on each of the x264 static libs
+- `build-x264`: x264 build scripts; Run these before normal build script to include x264 support
+- `build-xvid`: xvid build scripts; Run these before normal build script to include xvid support
+- `build-vorbis`: xvid build scripts; Run these before normal build script to include xvid support
 
-- `build-xvid-[arch]`: xvid build scripts for each arch; Run these before normal build script to include xvid support
+You can set the ARCHS environment variable to limit which architectues 
 
+e.g. export ARCHS="armv7 i386"
 
-## Revision
-
-The current ffmpeg trunk doesn't build with arm, so had to go back to r22404 in order to build arm targets. The i386 build does work on trunk (r22610) when I tried last.
-
-The changes that broke compilation are from:
-http://git.ffmpeg.org/?p=ffmpeg;a=commitdiff;h=af29d08a05d35c3b74e48d5f6c5cd56f1770eeca
-
-The gas-preprocessor breaks because of nested macros in arm/asm.S; I believe there are other issues as well though.
+You can create build-local to customise your build environemnt and ffmpeg-options to set the configure options for ffmpeg. See build-local.example and ffmpeg-conf.example for examples.
 
 ## Background
 
@@ -35,5 +30,5 @@ For x264 support in ffmpeg, run those build scripts first, and the ffmpeg build 
 
 ## Gas preprocessor
 
-Uses a modified gas preprocessor via http://github.com/yuvi/gas-preprocessor/
+Uses a gas preprocessor via http://github.com/yuvi/gas-preprocessor/
 
