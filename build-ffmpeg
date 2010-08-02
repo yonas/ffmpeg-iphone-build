@@ -40,6 +40,14 @@ do
         CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libxvid --extra-ldflags=-L$XVID_DIST/lib --extra-cflags=-I$XVID_DIST/include"
     fi
 
+#    OGG_DIST="$SCRIPT_DIR/ogg-$ARCH/dist"
+    VORBIS_DIST="$SCRIPT_DIR/vorbis-$ARCH/dist"
+    if [ -d "$VORBIS_DIST" ]; then
+        #CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libvorbis --extra-ldflags=-L$VORBIS_DIST/lib --extra-ldflags=-L$OGG_DIST/lib --extra-cflags=-I$VORBIS_DIST/include --extra-cflags=-I$OGG_DIST/include "
+        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libvorbis --extra-ldflags=-L$VORBIS_DIST/lib --extra-cflags=-I$VORBIS_DIST/include"
+    fi
+
+
     # Use this to set your own build paths
     if [ -f $SCRIPT_DIR/build-local ]
     then

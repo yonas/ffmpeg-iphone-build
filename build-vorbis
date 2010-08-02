@@ -1,0 +1,56 @@
+#!/bin/bash
+
+set -e
+
+SCRIPT_DIR=$( (cd -P $(dirname $0) && pwd) )
+
+. $SCRIPT_DIR/build-common
+
+wget -q http://downloads.xiph.org/releases/ogg/libogg-1.2.0.tar.gz
+tar zxf libogg-1.2.0.tar.gz
+mv libogg-1.2.0.tar.gz ogg
+
+wget -q http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.1.tar.gz
+tar zxf libvorbis-1.3.1.tar.bz2
+mv vorbis
+
+LIBS="ogg vorbis"
+
+for ARCH in $ARCHS
+do
+
+    for LIB in LIBS
+    do
+        DIR="$LIB-$ARCH"
+        cp -a $LIB $DIR
+
+        cd $DIR
+        mkdir -p dist
+
+        EXTRA_CFLAGS="-arch $ARCH"
+        EXTRA_LDFLAGS="-arch $ARCH"
+        case $ARCH in
+            armv6)
+                EXTRA_FLAGS="--host=arm-apple-darwin --enable-pic --disable-asm"
+                ;;
+            armv7)
+                EXTRA_FLAGS="--host=arm-apple-darwin --enable-pic"
+                ;;
+            i386)
+                ;;
+        esac
+
+        case $LIB in
+            vorbis)
+                LIB_FLAGS="--disable-oggtest --with-ogg-libraries=../ogg-$ARCH/dist/lib/ --with-ogg-includes=../ogg-$ARCH/dist/include/"
+                ;;
+        esac
+
+
+        CC=$CC ./configure CFLAGS=$EXTRA_CFLAGS LDFLAGS=$EXTRA_LDFLAGS --sysroot=$SYSROOT --prefix='dist' --disable-shared $EXTRA_FLAGS $LIB_FLAGS
+
+        make && make install
+
+        echo "Installed: $DIR/dist"
+    done
+done
