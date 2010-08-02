@@ -1,0 +1,41 @@
+#!/bin/bash
+
+set -e
+
+SCRIPT_DIR=$( (cd -P $(dirname $0) && pwd) )
+
+. $SCRIPT_DIR/build-common
+
+wget -q http://webm.googlecode.com/files/libvpx-0.9.1.tar.bz2
+tar jxf libvpx-0.9.1.tar.bz2
+mv libvpx-0.9.1 vpx
+
+
+for ARCH in $ARCHS
+do
+    DIR="vpx-$ARCH"
+    cp -a vpx $DIR
+
+    cd $DIR
+    mkdir -p dist
+
+    EXTRA_CFLAGS="-arch $ARCH --sysroot=$SYSROOT"
+    EXTRA_LDFLAGS="-arch $ARCH --sysroot=$SYSROOT"
+    case $ARCH in
+        armv6)
+            EXTRA_FLAGS="--target=armv6-darwin-gcc"
+            ;;
+        armv7)
+            EXTRA_FLAGS="--target=armv7-darwin-gcc"
+            ;;
+        i386)
+            ;;
+    esac
+
+    CC=$CC ./configure CFLAGS="$EXTRA_CFLAGS" LDFLAGS="$EXTRA_LDFLAGS" --prefix=`pwd`/dist --disable-shared $EXTRA_FLAGS $LIB_FLAGS
+
+    make && make install
+
+    echo "Installed: $DIR/dist"
+    cd $SCRIPT_DIR
+done
