@@ -1,0 +1,47 @@
+#!/bin/bash
+
+set -e
+
+ARCHS="armv6 armv7 i386"
+
+OUTPUT_DIR="ffmpeg-uarch"
+
+mkdir -p $OUTPUT_DIR/lib $OUTPUT_DIR/include $OUTPUT_DIR/share
+
+# Find an arch that exists
+for ARCH in $ARCHS
+do
+    if [ -d ffmpeg-$ARCH ]
+    then
+        MAIN_ARCH=ffmpeg-$ARCH
+    fi
+done
+
+if [ -z "$MAIN_ARCH" ]
+then
+    echo "Couldn't find any ffmpeg dirs"
+    exit
+fi
+
+
+for LIB in $MAIN_ARCH/dist/lib/*.a
+do
+  LIPO_CREATE=""
+  for ARCH in $ARCHS
+  do
+      if [ -d ffmpeg-$ARCH ]
+      then
+          LIPO_CREATE="$LIPO_CREATE-arch $ARCH ffmpeg-$ARCH/dist/lib/$LIB "
+      fi
+  done
+  OUTPUT="$OUTPUT_DIR/lib/$LIB"
+  echo "Creating: $OUTPUT"
+  lipo -create $LIPO_CREATE -output $OUTPUT
+  lipo -info $OUTPUT
+done
+
+echo "Copying headers from ffmpeg-$MAIN_ARCH..."
+cp -R ffmpeg-$MAIN_ARCH/dist/include/* $OUTPUT_DIR/include
+
+echo "Copying share from ffmpeg-$MAIN_ARCH..."
+cp -R ffmpeg-$MAIN_ARCH/dist/share/* $OUTPUT_DIR/share
