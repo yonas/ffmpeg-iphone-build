@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ARCHS="armv6 armv7 i386"
+ARCHS=${ARCHS:-"armv6 armv7 i386"}
 
 case $ARCH in
     i386)
