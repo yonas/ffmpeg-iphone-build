@@ -2,7 +2,8 @@
 
 set -e
 
-. build-common
+SCRIPT_DIR=$( (cd -P $(dirname $0) && pwd) )
+. $SCRIPT_DIR/build-common
 
 # Get xvid
 

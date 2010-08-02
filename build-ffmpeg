@@ -2,9 +2,10 @@
 
 set -e
 
-. build-common
-
 SCRIPT_DIR=$( (cd -P $(dirname $0) && pwd) )
+
+. $SCRIPT_DIR/build-common
+
 
 echo "Pulling trunk..."
 svn co svn://svn.ffmpeg.org/ffmpeg/trunk ffmpeg
