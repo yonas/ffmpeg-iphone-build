@@ -12,7 +12,7 @@ for ARCH in $ARCHS
 do
 
     DIR="x264-$ARCH"
-    cp -ar x264 $DIR
+    cp -a x264 $DIR
 
     cd $DIR
     mkdir -p dist

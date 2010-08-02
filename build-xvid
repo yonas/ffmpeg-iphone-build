@@ -6,11 +6,13 @@ SCRIPT_DIR=$( (cd -P $(dirname $0) && pwd) )
 . $SCRIPT_DIR/build-common
 
 # Get xvid
+# TODO fill this in
 
 for ARCH in $ARCHS
 do
 
     DIR="xvid-$ARCH"
+    cp -a xvid $DIR
 
     cd $DIR
     mkdir -p $DIR

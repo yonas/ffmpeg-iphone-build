@@ -14,7 +14,7 @@ for ARCH in $ARCHS
 do
 
     FFMPEG_DIR=ffmpeg-$ARCH
-    cp -ar ffmpeg $FFMPEG_DIR
+    cp -a ffmpeg $FFMPEG_DIR
 
     cd $FFMPEG_DIR
     mkdir -p dist
