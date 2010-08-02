@@ -42,7 +42,8 @@ do
 
         case $LIB in
             vorbis)
-                LIB_FLAGS="--disable-oggtest --with-ogg-libraries=../ogg-$ARCH/dist/lib/ --with-ogg-includes=../ogg-$ARCH/dist/include/"
+                #LIB_FLAGS="--disable-oggtest --with-ogg-libraries=../ogg-$ARCH/dist/lib/ --with-ogg-includes=../ogg-$ARCH/dist/include/"
+                LIB_FLAGS="--disable-oggtest"
                 ;;
         esac
 
