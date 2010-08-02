@@ -9,9 +9,9 @@ ARCHS="armv6 armv7"
 # Change the SDK
 case $ARCH in
     i386)
-        SYSROOT=/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.1.sdk/
+        SYSROOT=/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator3.1.sdk
         ;;
     *)
-        SYSROOT=/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator3.1.sdk
+        SYSROOT=/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.1.sdk/
         ;;
 esac
