@@ -69,4 +69,5 @@ do
     make && make install
 
     echo "Installed: $FFMPEG_DIR/dist"
+    cd $SCRIPT_DIR
 done

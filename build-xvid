@@ -38,4 +38,5 @@ do
     make && make install
 
     echo "Installed: $DIST_DIR"
+    cd $SCRIPT_DIR
 done
