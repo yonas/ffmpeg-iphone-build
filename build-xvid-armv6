@@ -1,8 +1,0 @@
-#!/bin/bash
-
-set -e
-
-ARCH=armv6
-EXTRA_FLAGS="--host=arm-apple-darwin"
-
-. build-xvid-common

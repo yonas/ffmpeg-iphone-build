@@ -1,8 +1,0 @@
-#!/bin/sh
-
-set -x
-
-ARCH=armv7
-EXTRA_FLAGS="--host=arm-apple-darwin --enable-pic"
-
-. build-xvid-common

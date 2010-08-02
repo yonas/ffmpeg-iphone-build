@@ -1,8 +1,0 @@
-#!/bin/bash
-
-set -e
-
-ARCH=i386
-EXTRA_FLAGS=""
-
-. build-xvid-common

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ARCHS="armv6 armv7"
+
 # Change your toolchain
 #CC=/home/johnf/dev/iphone-dev/toolchain/toolchain/pre/bin/arm-apple-darwin9-gcc
 #NM=/home/johnf/dev/iphone-dev/toolchain/toolchain/pre/bin/arm-apple-darwin9-nm

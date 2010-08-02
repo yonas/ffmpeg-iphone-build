@@ -1,31 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-SCRIPT_DIR=$( (cd -P $(dirname $0) && pwd) )
-FFMPEG_DIR=ffmpeg-$ARCH
-
-echo "Pulling trunk..."
-svn co svn://svn.ffmpeg.org/ffmpeg/trunk $FFMPEG_DIR
-
-cd $FFMPEG_DIR
-mkdir -p dist
-
-# Default configure options
-CONFIGURE_OPTIONS="--enable-gpl --enable-postproc --enable-swscale --enable-avfilter"
-
-# Use this to set your own configure-options
-. $SCRIPT_DIR/conf-options || true
-
-# Add x264 if exists
-X264_DIST="$SCRIPT_DIR/x264-$ARCH/dist"
-if [ -d "$X264_DIST" ]; then
-  CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libx264 --extra-ldflags=-L$X264_DIST/lib --extra-cflags=-I$X264_DIST/include"
-fi
-
-# Add xvid if exists
-XVID_DIST="$SCRIPT_DIR/xvid-$ARCH"
-if [ -d "$XVID_DIST" ]; then
-  CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libxvid --extra-ldflags=-L$XVID_DIST/lib --extra-cflags=-I$XVID_DIST/include"
-fi
+ARCHS="armv6 armv7 i386"
 
 case $ARCH in
     i386)
@@ -37,18 +12,9 @@ case $ARCH in
         SYSROOT=/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator3.0.sdk
         ;;
 esac
-
 AS=$CC
 NM=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/nm
 
-# Use this to set your own build paths
-. $SCRIPT_DIR/build-local || true
 
-echo "Configure options: $CONFIGURE_OPTIONS"
-
-set -x.
-./configure --cc="$CC" --as="$SCRIPT_DIR/gas-preprocessor.pl $AS" --nm="$NM" --sysroot=$SYSROOT $EXTRA_FLAGS --extra-ldflags="$EXTRA_LDFLAGS" --extra-cflags="$EXTRA_CFLAGS" --prefix="dist" $CONFIGURE_OPTIONS
-
-make && make install
-
-echo "Installed: $FFMPEG_DIR/dist"
+# Override any of the above locally
+. build-local

@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -e
+
+. build-common
+
+# Get xvid
+
+for ARCH in $ARCHS
+do
+
+    DIR="xvid-$ARCH"
+
+    cd $DIR
+    mkdir -p $DIR
+
+    cd build/generic/
+
+    case $ARCH in
+        armv6)
+            EXTRA_FLAGS="--host=arm-apple-darwin"
+            ;;
+        armv7)
+            EXTRA_FLAGS="--host=arm-apple-darwin --enable-pic"
+            ;;
+        i386)
+            EXTRA_FLAGS=""
+            ;;
+    esac
+
+    FLAGS="-arch $ARCH -isysroot $SYSROOT"
+
+    CC=$CC LDFLAGS=$FLAGS CFLAGS=$FLAGS ./configure --prefix="dist" $EXTRA_FLAGS
+
+    make && make install
+
+    echo "Installed: $DIST_DIR"
+done

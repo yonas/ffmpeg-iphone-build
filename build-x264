@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -e
+
+. build-common
+
+git clone git://git.videolan.org/x264.git x264
+
+for ARCH in $ARCHS
+do
+
+    DIR="x264-$ARCH"
+    cp -ar x264 $DIR
+
+    cd $DIR
+    mkdir -p dist
+
+
+    EXTRA_CFLAGS="-arch $ARCH"
+    EXTRA_LDFLAGS="-arch $ARCH"
+    case $ARCH in
+        armv6)
+            EXTRA_FLAGS="--host=arm-apple-darwin --enable-pic --disable-asm"
+            ;;
+        armv7)
+            EXTRA_FLAGS="--host=arm-apple-darwin --enable-pic"
+            ;;
+        i386)
+            ;;
+    esac
+
+    CC=$CC ./configure $EXTRA_FLAGS --sysroot="$SYSROOT" --prefix='dist' --extra-cflags="$EXTRA_CFLAGS" --extra-ldflags="$EXTRA_LDFLAGS"
+
+    make && make install
+
+    echo "Installed: $DIR/dist"
+done
