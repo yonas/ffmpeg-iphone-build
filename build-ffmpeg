@@ -47,6 +47,10 @@ do
         CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libvorbis --extra-ldflags=-L$VORBIS_DIST/lib --extra-cflags=-I$VORBIS_DIST/include"
     fi
 
+    VPX_DIST="$SCRIPT_DIR/vpx-$ARCH/dist"
+    if [ -d "$VPX_DIST" ]; then
+        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libvpx --extra-ldflags=-L$VPX_DIST/lib --extra-cflags=-I$VPXE_DIST/include"
+    fi
 
     # Use this to set your own build paths
     if [ -f $SCRIPT_DIR/build-local ]
