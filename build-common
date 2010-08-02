@@ -11,6 +11,7 @@ case $ARCH in
         ;;
     *)
         CC=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/gcc-4.2
+        CPP=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/cpp # cpp-4.2 seems broken
         SYSROOT=/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator3.0.sdk
         ;;
 esac
