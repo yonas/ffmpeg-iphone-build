@@ -1,0 +1,41 @@
+#!/bin/bash
+
+set -e
+
+SCRIPT_DIR=$( (cd -P $(dirname $0) && pwd) )
+
+. $SCRIPT_DIR/build-common
+
+wget -q 'http://downloads.sourceforge.net/project/lame/lame/3.98.4/lame-3.98.4.tar.gz?use_mirror=transact&ts=1280756408'
+tar zxf lame-3.98.4.tar.gz
+mv lame-3.98.4 lame
+
+
+for ARCH in $ARCHS
+do
+    DIR="lame-$ARCH"
+    cp -a lame $DIR
+
+    cd $DIR
+    mkdir -p dist
+
+    EXTRA_CFLAGS="-arch $ARCH --sysroot=$SYSROOT"
+    EXTRA_LDFLAGS="-arch $ARCH --sysroot=$SYSROOT"
+    case $ARCH in
+        armv6)
+            EXTRA_FLAGS="--target=armv6-darwin-gcc"
+            ;;
+        armv7)
+            EXTRA_FLAGS="--target=armv7-darwin-gcc"
+            ;;
+        i386)
+            ;;
+    esac
+
+    CC=$CC ./configure CFLAGS="$EXTRA_CFLAGS" LDFLAGS="$EXTRA_LDFLAGS" --prefix=`pwd`/dist --disable-shared $EXTRA_FLAGS $LIB_FLAGS
+
+    make && make install
+
+    echo "Installed: $DIR/dist"
+    cd $SCRIPT_DIR
+done
