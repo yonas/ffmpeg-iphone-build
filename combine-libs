@@ -24,6 +24,11 @@ do
         continue
     fi
 
+    if [ ! -d $LIBRARY-$MAIN_ARCH/dist/lib ]
+    then
+        continue
+    fi
+
     OUTPUT_DIR="$LIBRARY-uarch"
 
     mkdir -p $OUTPUT_DIR/lib $OUTPUT_DIR/include $OUTPUT_DIR/share
