@@ -30,6 +30,7 @@ do
 
     for LIB in $LIBRARY-$MAIN_ARCH/dist/lib/*.a
     do
+        LIB=`dirname $LIB`
         LIPO_CREATE=""
         for ARCH in $ARCHS
         do
