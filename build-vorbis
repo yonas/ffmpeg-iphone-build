@@ -47,7 +47,7 @@ do
         esac
 
 
-        CC=$CC ./configure CFLAGS="$EXTRA_CFLAGS" LDFLAGS="$EXTRA_LDFLAGS" --prefix='dist' --disable-shared $EXTRA_FLAGS $LIB_FLAGS
+        CC=$CC ./configure CFLAGS="$EXTRA_CFLAGS" LDFLAGS="$EXTRA_LDFLAGS" --prefix=`pwd`/dist --disable-shared $EXTRA_FLAGS $LIB_FLAGS
 
         make && make install
 
