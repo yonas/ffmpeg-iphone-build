@@ -19,7 +19,7 @@ LIBS="ogg vorbis"
 for ARCH in $ARCHS
 do
 
-    for LIB in LIBS
+    for LIB in $LIBS
     do
         DIR="$LIB-$ARCH"
         cp -a $LIB $DIR
