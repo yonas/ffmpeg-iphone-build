@@ -9,7 +9,7 @@ SCRIPT_DIR=$( (cd -P $(dirname $0) && pwd) )
 rm -rf lame-3.98.4 lame
 if [ ! -f lame-3.98.4.tar.gz ]
 then
-    wget -q 'http://downloads.sourceforge.net/project/lame/lame/3.98.4/lame-3.98.4.tar.gz?use_mirror=transact&ts=1280756408'
+    wget -q 'http://downloads.sourceforge.net/project/lame/lame/3.98.4/lame-3.98.4.tar.gz'
 fi
 tar zxf lame-3.98.4.tar.gz
 mv lame-3.98.4 lame
