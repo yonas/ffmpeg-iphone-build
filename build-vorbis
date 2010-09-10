@@ -35,8 +35,8 @@ do
         cd $DIR
         mkdir -p dist
 
-        EXTRA_CFLAGS="-arch $ARCH --sysroot=$SYSROOT"
-        EXTRA_LDFLAGS="-arch $ARCH --sysroot=$SYSROOT"
+        EXTRA_CFLAGS="--sysroot=$SYSROOT"
+        EXTRA_LDFLAGS="--sysroot=$SYSROOT"
         case $ARCH in
             armv6)
                 EXTRA_FLAGS="--host=arm-apple-darwin --enable-pic --disable-asm"
@@ -50,9 +50,9 @@ do
 
         case $LIB in
             vorbis)
-                LIB_FLAGS="--disable-oggtest"
+                LIB_FLAGS="--disable-oggtest --with-ogg=`pwd`/../ogg-$ARCH/dist --with-ogg-libraries=`pwd`/../ogg-$ARCH/dist/lib --with-ogg-includes=`pwd`/../ogg-$ARCH/dist/include"
                 export OGG_CFLAGS="-I`pwd`/../ogg-$ARCH/dist/include"
-                export OGG_LIBS="-I`pwd`/../ogg-$ARCH/dist/lib"
+                export OGG_LIBS="-L`pwd`/../ogg-$ARCH/dist/lib"
                 ;;
         esac
 
