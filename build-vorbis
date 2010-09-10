@@ -55,6 +55,7 @@ do
                 ;;
         esac
 
+        echo "Configuring $LIB for $ARCH..."
         CC=$CC CPP=$CPP ./configure CFLAGS="$EXTRA_CFLAGS" LDFLAGS="$EXTRA_LDFLAGS" --prefix=`pwd`/dist --disable-shared $EXTRA_FLAGS $LIB_FLAGS
 
         # Make it not compile
@@ -64,6 +65,7 @@ do
                 ;;
         esac
 
+        echo "Compiling $LIB for $ARCH..."
         make && make install
 
         echo "Installed: $DIR/dist"

@@ -36,8 +36,10 @@ do
             ;;
     esac
 
+    echo "Configuring vpx for $ARCH..."
     CC=$CC ./configure --prefix=`pwd`/dist --disable-shared $EXTRA_FLAGS $LIB_FLAGS
 
+    echo "Installing vpx for $ARCH..."
     make && make install
 
     echo "Installed: $DIR/dist"

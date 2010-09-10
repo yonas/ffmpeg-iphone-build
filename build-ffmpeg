@@ -83,8 +83,10 @@ do
 
     echo "Configure options: $CONFIGURE_OPTIONS"
 
+    echo "Configuring ffmpeg for $ARCH..."
     ./configure --cc="$CC" --as="$SCRIPT_DIR/gas-preprocessor.pl $AS" --nm="$NM" --sysroot=$SYSROOT $EXTRA_FLAGS --extra-ldflags="$EXTRA_LDFLAGS" --extra-cflags="$EXTRA_CFLAGS" --prefix="dist" $CONFIGURE_OPTIONS
 
+    echo "Installing ffmpeg for $ARCH..."
     make && make install
 
     echo "Installed: $FFMPEG_DIR/dist"
