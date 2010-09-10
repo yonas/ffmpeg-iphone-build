@@ -52,6 +52,7 @@ do
             vorbis)
                 LIB_FLAGS="--disable-oggtest"
                 export OGG_CFLAGS="-I`pwd`/../ogg-$ARCH/dist/include"
+                export OGG_LIBS="-I`pwd`/../ogg-$ARCH/dist/lib"
                 ;;
         esac
 
