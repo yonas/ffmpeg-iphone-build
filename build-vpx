@@ -6,7 +6,11 @@ SCRIPT_DIR=$( (cd -P $(dirname $0) && pwd) )
 
 . $SCRIPT_DIR/build-common
 
-wget -q http://webm.googlecode.com/files/libvpx-0.9.1.tar.bz2
+rm -rf libvpx-0.9.1 vpx
+if [ ! -f libvpx-0.9.1.tar.bz2 ]
+then
+    wget -q http://webm.googlecode.com/files/libvpx-0.9.1.tar.bz2
+fi
 tar jxf libvpx-0.9.1.tar.bz2
 mv libvpx-0.9.1 vpx
 
