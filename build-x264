@@ -12,6 +12,7 @@ for ARCH in $ARCHS
 do
 
     DIR="x264-$ARCH"
+    rm -rf $DIR
     cp -a x264 $DIR
 
     cd $DIR

@@ -12,6 +12,7 @@ for ARCH in $ARCHS
 do
 
     DIR="xvid-$ARCH"
+    rm -rf $DIR
     cp -a xvid $DIR
 
     cd $DIR

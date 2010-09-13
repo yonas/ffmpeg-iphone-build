@@ -30,6 +30,7 @@ do
     for LIB in $LIBS
     do
         DIR="$LIB-$ARCH"
+        rm -rf $DIR
         cp -a $LIB $DIR
 
         cd $DIR
