@@ -24,6 +24,9 @@ do
     cd $DIR
     mkdir -p dist
 
+    sed "s/iPhoneOS3.1/iPhoneOS$SDK_VERSION/" < build/make/configure.sh > build/make/configure.sh.tmp && mv build/make/configure.sh.tmp build/make/configure.sh
+    chmod +x build/make/configure.sh
+
     EXTRA_CFLAGS="-arch $ARCH --sysroot=$SYSROOT"
     EXTRA_LDFLAGS="-arch $ARCH --sysroot=$SYSROOT"
     case $ARCH in

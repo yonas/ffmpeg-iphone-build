@@ -17,16 +17,18 @@ PATH=$SCRIPT_DIR:$PATH
 case $ARCH in
     i386)
         CC=${CC:-"/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/i686-apple-darwin10-gcc-4.2.1"}
-        SYSROOT=${SYSROOT:-"/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS$SDK_VERSION.sdk"}
         AS=${AS:-"$CC"}
         NM=${NM:-"/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/nm"}
+
+        SYSROOT=${SYSROOT:-"/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator$SDK_VERSION.sdk"}
         ;;
     *)
         CC=${SYSROOT:-"/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/gcc-4.2"}
         CPP=${CPP:-"/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/cpp # cpp-4.2 seems broken"}
         AS=${AS:-"$CC"}
-        SYSROOT=${SYSROOT:-"/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator$SDK_VERSION.sdk"}
         NM=${NM:-"/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/nm"}
+
+        SYSROOT=${SYSROOT:-"/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS$SDK_VERSION.sdk"}
         ;;
 esac
 
