@@ -35,8 +35,8 @@ do
         cd $DIR
         mkdir -p dist
 
-        EXTRA_CFLAGS="--sysroot=$SYSROOT"
-        EXTRA_LDFLAGS="--sysroot=$SYSROOT"
+        EXTRA_CFLAGS="--arch $ARCH --sysroot=$SYSROOT"
+        EXTRA_LDFLAGS="--arch $ARCH --sysroot=$SYSROOT"
         case $ARCH in
             armv6)
                 EXTRA_FLAGS="--host=arm-apple-darwin --enable-pic --disable-asm"
