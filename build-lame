@@ -18,6 +18,7 @@ mv lame-3.98.4 lame
 for ARCH in $ARCHS
 do
     DIR="lame-$ARCH"
+    rm -rf $DIR
     cp -a lame $DIR
 
     cd $DIR

@@ -30,6 +30,7 @@ do
     for LIB in $LIBS
     do
         DIR="$LIB-$ARCH"
+        rm -rf $DIR
         cp -a $LIB $DIR
 
         cd $DIR
@@ -53,6 +54,9 @@ do
                 LIB_FLAGS="--disable-oggtest --with-ogg=`pwd`/../ogg-$ARCH/dist --with-ogg-libraries=`pwd`/../ogg-$ARCH/dist/lib --with-ogg-includes=`pwd`/../ogg-$ARCH/dist/include"
                 export OGG_CFLAGS="-I`pwd`/../ogg-$ARCH/dist/include"
                 export OGG_LIBS="-L`pwd`/../ogg-$ARCH/dist/lib"
+                # Configure file is broken if you don't have pkg-config
+                sed "s/-force_cpusubtype_ALL//" < configure> configure.tmp && mv configure.tmp configure
+                chmod +x configure
                 ;;
         esac
 
