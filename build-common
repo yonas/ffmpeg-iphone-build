@@ -1,26 +1,35 @@
 #!/bin/bash
 
+# Ability to override things below
+
+if [ -f $SCRIPT_DIR/build-local ]
+then
+    . $SCRIPT_DIR/build-local
+fi
+
+
 ARCHS=${ARCHS:-"armv6 armv7 i386"}
+
+SDK_VERSION=${SDK_VERSION:-"4.1"}
 
 PATH=$SCRIPT_DIR:$PATH
 
 case $ARCH in
     i386)
-        CC=/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/i686-apple-darwin10-gcc-4.2.1
-        SYSROOT=/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.0.sdk
+        CC=${CC:-"/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/i686-apple-darwin10-gcc-4.2.1"}
+        SYSROOT=${SYSROOT:-"/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS$SDK_VERSION.sdk"}
+        AS=${AS:-"$CC"}
+        NM=${NM:-"/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/nm"}
         ;;
     *)
-        CC=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/gcc-4.2
-        CPP=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/cpp # cpp-4.2 seems broken
-        SYSROOT=/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator3.0.sdk
+        CC=${SYSROOT:-"/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/gcc-4.2"}
+        CPP=${CPP:-"/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/cpp # cpp-4.2 seems broken"}
+        AS=${AS:-"$CC"}
+        SYSROOT=${SYSROOT:-"/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator$SDK_VERSION.sdk"}
+        NM=${NM:-"/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/nm"}
         ;;
 esac
-AS=$CC
-NM=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/nm
 
 
-# Override any of the above locally
-if [ -f $SCRIPT_DIR/build-local ]
-then
-    . $SCRIPT_DIR/build-local
-fi
+
+

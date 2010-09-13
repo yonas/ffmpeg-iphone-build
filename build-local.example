@@ -1,17 +1,27 @@
 #!/bin/bash
 
+# Change the architectures you care about
 ARCHS="armv6 armv7"
 
-# Change your toolchain
-#CC=/home/johnf/dev/iphone-dev/toolchain/toolchain/pre/bin/arm-apple-darwin9-gcc
-#NM=/home/johnf/dev/iphone-dev/toolchain/toolchain/pre/bin/arm-apple-darwin9-nm
+# Change the SDK_VERSION
+SDK_VERSION="3.1"
 
-# Change the SDK
+# Update your toolchain location if you aren't on a Mac
 case $ARCH in
     i386)
-        SYSROOT=/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator3.1.sdk
         ;;
     *)
-        SYSROOT=/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.1.sdk/
+        CC=/home/johnf/dev/iphone-dev/toolchain/toolchain/pre/bin/arm-apple-darwin9-gcc
+        CPP=/home/johnf/dev/iphone-dev/toolchain/toolchain/pre/bin/arm-apple-darwin9-cpp
+        NM=/home/johnf/dev/iphone-dev/toolchain/toolchain/pre/bin/arm-apple-darwin9-nm
+        ;;
+esac
+
+# Change the SDK location if you aren't on a Mac
+case $ARCH in
+    i386)
+        ;;
+    *)
+        SYSROOT=/home/johnf/dev/iphone-dev/toolchain/sdks/iPhoneOS$SDK_VERSION.sdk/
         ;;
 esac
