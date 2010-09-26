@@ -45,6 +45,16 @@ foreach my $i (1 .. $#gcc_cmd-1) {
     }
 }
 
+# assume we're not cross-compiling if no -arch or the binary doesn't have the arch name
+if (!$comm) {
+    my $native_arch = qx/arch/;
+    if ($native_arch =~ /arm/) {
+        $comm = '@';
+    } elsif ($native_arch =~ /powerpc|ppc/) {
+        $comm = '#';
+    }
+}
+
 if (!$comm) {
     die "Unable to identify target architecture";
 }
@@ -101,16 +111,20 @@ sub parse_line {
         if (/\.endif/) {
             pop(@ifstack);
             return;
+        } elsif ($line =~ /\.elseif\s+(.*)/) {
+            if ($ifstack[-1] == 0) {
+                $ifstack[-1] = !!eval($1);
+            } elsif ($ifstack[-1] > 0) {
+                $ifstack[-1] = -$ifstack[-1];
+            }
+            return;
         } elsif (/\.else/) {
             $ifstack[-1] = !$ifstack[-1];
-            return;
-        } elsif (/\.elsif\s+(.*)/) {
-            $ifstack[-1] = eval($1);
             return;
         }
 
         # discard lines in false .if blocks
-        if (!$ifstack[-1]) {
+        if ($ifstack[-1] <= 0) {
             return;
         }
     }
