@@ -7,13 +7,23 @@ SCRIPT_DIR=$( (cd -P $(dirname $0) && pwd) )
 . $SCRIPT_DIR/build-common
 
 
-echo "Pulling trunk..."
-svn co svn://svn.ffmpeg.org/ffmpeg/trunk ffmpeg
+if [ -d ffmpeg ]
+then
+    cd ffmpeg
+    echo "Updating trunk..."
+    svn update
+    cd -
+else
+    echo "Pulling trunk..."
+    svn co svn://svn.ffmpeg.org/ffmpeg/trunk ffmpeg
+fi
 
 for ARCH in $ARCHS
 do
 
+
     FFMPEG_DIR=ffmpeg-$ARCH
+    rm -rf $FFMPEG_DIR
     cp -a ffmpeg $FFMPEG_DIR
 
     cd $FFMPEG_DIR
