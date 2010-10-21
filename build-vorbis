@@ -34,7 +34,8 @@ do
         cp -a $LIB $DIR
 
         cd $DIR
-        mkdir -p dist
+        DIST_DIR=$DIST_DIR_BASE-$ARCH
+        mkdir -p $DIST_DIR
 
         EXTRA_CFLAGS="-arch $ARCH --sysroot=$SYSROOT"
         EXTRA_LDFLAGS="-arch $ARCH --sysroot=$SYSROOT"
@@ -51,9 +52,9 @@ do
 
         case $LIB in
             vorbis)
-                LIB_FLAGS="--disable-oggtest --with-ogg=`pwd`/../ogg-$ARCH/dist --with-ogg-libraries=`pwd`/../ogg-$ARCH/dist/lib --with-ogg-includes=`pwd`/../ogg-$ARCH/dist/include"
-                export OGG_CFLAGS="-I`pwd`/../ogg-$ARCH/dist/include"
-                export OGG_LIBS="-L`pwd`/../ogg-$ARCH/dist/lib"
+                LIB_FLAGS="--disable-oggtest --with-ogg=$DIST_DIR --with-ogg-libraries=$DIST_DIR/lib --with-ogg-includes=$DIST_DIR/include"
+                export OGG_CFLAGS="-I$DIST_DIR/include"
+                export OGG_LIBS="-L$DIST_DIR/lib"
                 # Configure file is broken if you don't have pkg-config
                 sed "s/-force_cpusubtype_ALL//" < configure> configure.tmp && mv configure.tmp configure
                 chmod +x configure
@@ -61,7 +62,7 @@ do
         esac
 
         echo "Configuring $LIB for $ARCH..."
-        CC=$CC CPP=$CPP ./configure CFLAGS="$EXTRA_CFLAGS" LDFLAGS="$EXTRA_LDFLAGS" --prefix=`pwd`/dist --disable-shared $EXTRA_FLAGS $LIB_FLAGS
+        CC=$CC CPP=$CPP ./configure CFLAGS="$EXTRA_CFLAGS" LDFLAGS="$EXTRA_LDFLAGS" --prefix=$DIST_DIR --disable-shared $EXTRA_FLAGS $LIB_FLAGS
 
         # Make it not compile
         case $LIB in
@@ -73,7 +74,6 @@ do
         echo "Compiling $LIB for $ARCH..."
         make && make install
 
-        echo "Installed: $DIR/dist"
         cd $SCRIPT_DIR
     done
 done

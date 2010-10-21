@@ -12,6 +12,11 @@ ARCHS=${ARCHS:-"armv6 armv7 i386"}
 
 SDK_VERSION=${SDK_VERSION:-"4.1"}
 
+
+DIST_DIR_BASE=${DIST_DIR_BASE:="$SCRIPT_DIR/dist"}
+
+
+
 PATH=$SCRIPT_DIR:$PATH
 
 case $ARCH in

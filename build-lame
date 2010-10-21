@@ -22,7 +22,8 @@ do
     cp -a lame $DIR
 
     cd $DIR
-    mkdir -p dist
+    DIST_DIR=$DIST_DIR_BASE-$ARCH
+    mkdir -p $DIST_DIR
 
     EXTRA_CFLAGS="-arch $ARCH --sysroot=$SYSROOT"
     EXTRA_LDFLAGS="-arch $ARCH --sysroot=$SYSROOT"
@@ -38,11 +39,10 @@ do
     esac
 
     echo "Configuring lame for $ARCH..."
-    CC=$CC CPP=$CPP ./configure CFLAGS="$EXTRA_CFLAGS" LDFLAGS="$EXTRA_LDFLAGS" --prefix=`pwd`/dist --disable-shared $EXTRA_FLAGS $LIB_FLAGS --disable-frontend
+    CC=$CC CPP=$CPP ./configure CFLAGS="$EXTRA_CFLAGS" LDFLAGS="$EXTRA_LDFLAGS" --prefix=$DIST_DIR --disable-shared $EXTRA_FLAGS $LIB_FLAGS --disable-frontend
 
     echo "Installing lame for $ARCH..."
     make && make install
 
-    echo "Installed: $DIR/dist"
     cd $SCRIPT_DIR
 done

@@ -16,7 +16,8 @@ do
     cp -a x264 $DIR
 
     cd $DIR
-    mkdir -p dist
+    DIST_DIR=$DIST_DIR_BASE-$ARCH
+    mkdir -p $DIST_DIR
 
 
     EXTRA_CFLAGS="-arch $ARCH"
@@ -33,11 +34,10 @@ do
     esac
 
     echo "Configuring x264 for $ARCH..."
-    CC=$CC ./configure $EXTRA_FLAGS --sysroot="$SYSROOT" --prefix='dist' --extra-cflags="$EXTRA_CFLAGS" --extra-ldflags="$EXTRA_LDFLAGS"
+    CC=$CC ./configure $EXTRA_FLAGS --sysroot="$SYSROOT" --prefix=$DIST_DIR --extra-cflags="$EXTRA_CFLAGS" --extra-ldflags="$EXTRA_LDFLAGS"
 
     echo "Installing x264 for $ARCH..."
     make && make install
 
-    echo "Installed: $DIR/dist"
     cd $SCRIPT_DIR
 done

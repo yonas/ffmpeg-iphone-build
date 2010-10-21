@@ -16,7 +16,8 @@ do
     cp -a xvid $DIR
 
     cd $DIR
-    mkdir -p $DIR
+    DIST_DIR=$DIST_DIR_BASE-$ARCH
+    mkdir -p $DIST_DIR
 
     cd build/generic/
 
@@ -34,10 +35,9 @@ do
 
     FLAGS="-arch $ARCH -isysroot $SYSROOT"
 
-    CC=$CC LDFLAGS=$FLAGS CFLAGS=$FLAGS ./configure --prefix="dist" $EXTRA_FLAGS
+    CC=$CC LDFLAGS=$FLAGS CFLAGS=$FLAGS ./configure --prefix=$DIST_DIR $EXTRA_FLAGS
 
     make && make install
 
-    echo "Installed: $DIST_DIR"
     cd $SCRIPT_DIR
 done
