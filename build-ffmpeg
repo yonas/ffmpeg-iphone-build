@@ -40,32 +40,32 @@ do
     fi
 
     # Add x264 if exists
-    if [ -d "$DIST_DIR/lib/libx264.a" ]; then
+    if [ -f "$DIST_DIR/lib/libx264.a" ]; then
         CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libx264"
     fi
 
     # Add xvid if exists
-    if [ -d "$DIST_DIR/lib/libxvid.a" ]; then
+    if [ -f "$DIST_DIR/lib/libxvid.a" ]; then
         CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libxvid"
     fi
 
     # Add vorbis if exists
-    if [ -d "$DIST_DIR/lib/libvorbis.a" ]; then
+    if [ -f "$DIST_DIR/lib/libvorbis.a" ]; then
         CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libvorbis"
     fi
 
     # Add vpx if exists
-    if [ -d "$DIST_DIR/lib/libvpx.a" ]; then
+    if [ -f "$DIST_DIR/lib/libvpx.a" ]; then
         CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libvpx"
     fi
 
     # Add lame if exists
-    if [ -d "$DIST_DIR/lib/libmp3lame.a" ]; then
+    if [ -f "$DIST_DIR/lib/libmp3lame.a" ]; then
         CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libmp3lame"
     fi
 
     # Add speex if exists
-    if [ -d "$DIST_DIR/lib/libspeex.a" ]; then
+    if [ -f "$DIST_DIR/lib/libspeex.a" ]; then
         CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libspeex"
     fi
 
@@ -104,6 +104,6 @@ do
 
     cd $SCRIPT_DIR
 
-#    rm -rf $DIST_DIR/bin
-#    rm -rf $DIST_DIR/share
+    rm -rf $DIST_DIR/bin
+    rm -rf $DIST_DIR/share
 done

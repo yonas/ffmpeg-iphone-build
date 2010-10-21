@@ -1,0 +1,71 @@
+#!/bin/bash
+
+set -e
+
+SCRIPT_DIR=$( (cd -P $(dirname $0) && pwd) )
+
+. $SCRIPT_DIR/build-common
+
+rm -rf libogg-1.2.0 ogg
+if [ ! -f libogg-1.2.0.tar.gz ]
+then
+    wget -q http://downloads.xiph.org/releases/ogg/libogg-1.2.0.tar.gz
+fi
+tar zxf libogg-1.2.0.tar.gz
+mv libogg-1.2.0 ogg
+
+VERSION=1.2rc1
+
+rm -rf speex-$VERSION.tar.gz speex
+if [ ! -f speex-$VERSION.tar.gz ]
+then
+    wget -q http://downloads.xiph.org/releases/speex/speex-1.2rc1.tar.gz
+fi
+tar zxf speex-$VERSION.tar.gz
+mv speex-$VERSION speex
+
+LIBS="ogg speex"
+
+for ARCH in $ARCHS
+do
+
+    for LIB in $LIBS
+    do
+        DIR="$LIB-$ARCH"
+        rm -rf $DIR
+        cp -a $LIB $DIR
+
+        cd $DIR
+        DIST_DIR=$DIST_DIR_BASE-$ARCH
+        mkdir -p $DIST_DIR
+
+        EXTRA_CFLAGS="-arch $ARCH --sysroot=$SYSROOT"
+        EXTRA_LDFLAGS="-arch $ARCH --sysroot=$SYSROOT"
+        case $ARCH in
+            armv6)
+                EXTRA_FLAGS="--host=arm-apple-darwin --enable-pic --disable-asm"
+                ;;
+            armv7)
+                EXTRA_FLAGS="--host=arm-apple-darwin --enable-pic"
+                ;;
+            i386)
+                ;;
+        esac
+
+        case $LIB in
+            speex)
+                LIB_FLAGS="--with-ogg=$DIST_DIR --with-ogg-libraries=$DIST_DIR/lib --with-ogg-includes=$DIST_DIR/include"
+                export OGG_CFLAGS="-I$DIST_DIR/include"
+                export OGG_LIBS="-L$DIST_DIR/lib"
+                ;;
+        esac
+
+        echo "Configuring $LIB for $ARCH..."
+        CC=$CC CPP=$CPP ./configure CFLAGS="$EXTRA_CFLAGS" LDFLAGS="$EXTRA_LDFLAGS" --prefix=$DIST_DIR --disable-shared $EXTRA_FLAGS $LIB_FLAGS
+
+        echo "Compiling $LIB for $ARCH..."
+        make && make install
+
+        cd $SCRIPT_DIR
+    done
+done
