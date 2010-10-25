@@ -22,7 +22,8 @@ do
     cp -a vpx $DIR
 
     cd $DIR
-    mkdir -p dist
+    DIST_DIR=$DIST_DIR_BASE-$ARCH
+    mkdir -p $DIST_DIR
 
     sed "s/iPhoneOS3.1/iPhoneOS$SDK_VERSION/;s/arm-apple-darwin9-gcc-4.2.1/gcc/" < build/make/configure.sh > build/make/configure.sh.tmp && mv build/make/configure.sh.tmp build/make/configure.sh
     chmod +x build/make/configure.sh
@@ -41,11 +42,10 @@ do
     esac
 
     echo "Configuring vpx for $ARCH..."
-    CC=$CC CFLAGS="$EXTRA_CFLAGS" LDFLAGS="$EXTRA_LDFLAGS" ./configure --prefix=`pwd`/dist --disable-shared $EXTRA_FLAGS
+    CC=$CC CFLAGS="$EXTRA_CFLAGS" LDFLAGS="$EXTRA_LDFLAGS" ./configure --prefix=$DIST_DIR --disable-shared $EXTRA_FLAGS
 
     echo "Installing vpx for $ARCH..."
     make && make install
 
-    echo "Installed: $DIR/dist"
     cd $SCRIPT_DIR
 done

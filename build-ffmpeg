@@ -27,7 +27,8 @@ do
     cp -a ffmpeg $FFMPEG_DIR
 
     cd $FFMPEG_DIR
-    mkdir -p dist
+    DIST_DIR=$DIST_DIR_BASE-$ARCH
+    mkdir -p $DIST_DIR
 
     # Default configure options
     CONFIGURE_OPTIONS="--enable-gpl --enable-postproc --enable-swscale --enable-avfilter"
@@ -39,41 +40,43 @@ do
     fi
 
     # Add x264 if exists
-    X264_DIST="$SCRIPT_DIR/x264-$ARCH/dist"
-    if [ -d "$X264_DIST" ]; then
-        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libx264 --extra-ldflags=-L$X264_DIST/lib --extra-cflags=-I$X264_DIST/include"
+    if [ -f "$DIST_DIR/lib/libx264.a" ]; then
+        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libx264"
     fi
 
     # Add xvid if exists
-    XVID_DIST="$SCRIPT_DIR/xvid-$ARCH"
-    if [ -d "$XVID_DIST" ]; then
-        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libxvid --extra-ldflags=-L$XVID_DIST/lib --extra-cflags=-I$XVID_DIST/include"
+    if [ -f "$DIST_DIR/lib/libxvid.a" ]; then
+        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libxvid"
     fi
 
     # Add vorbis if exists
-    OGG_DIST="$SCRIPT_DIR/ogg-$ARCH/dist"
-    VORBIS_DIST="$SCRIPT_DIR/vorbis-$ARCH/dist"
-    if [ -d "$VORBIS_DIST" ]; then
-        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libvorbis --extra-ldflags=-L$VORBIS_DIST/lib --extra-ldflags=-L$OGG_DIST/lib --extra-cflags=-I$VORBIS_DIST/include --extra-cflags=-I$OGG_DIST/include "
+    if [ -f "$DIST_DIR/lib/libvorbis.a" ]; then
+        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libvorbis"
     fi
 
     # Add vpx if exists
-    VPX_DIST="$SCRIPT_DIR/vpx-$ARCH/dist"
-    if [ -d "$VPX_DIST" ]; then
-        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libvpx --extra-ldflags=-L$VPX_DIST/lib --extra-cflags=-I$VPX_DIST/include"
+    if [ -f "$DIST_DIR/lib/libvpx.a" ]; then
+        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libvpx"
     fi
 
     # Add lame if exists
-    LAME_DIST="$SCRIPT_DIR/lame-$ARCH/dist"
-    if [ -d "$LAME_DIST" ]; then
-        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libmp3lame --extra-ldflags=-L$LAME_DIST/lib --extra-cflags=-I$LAME_DIST/include"
+    if [ -f "$DIST_DIR/lib/libmp3lame.a" ]; then
+        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libmp3lame"
     fi
+
+    # Add speex if exists
+    if [ -f "$DIST_DIR/lib/libspeex.a" ]; then
+        CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libspeex"
+    fi
+
 
     # Use this to set your own build paths
     if [ -f $SCRIPT_DIR/build-local ]
     then
         . $SCRIPT_DIR/build-local
     fi
+
+    CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --extra-ldflags=-L$DIST_DIR/lib --extra-cflags=-I$DIST_DIR/include"
 
     case $ARCH in
         armv6)
@@ -94,11 +97,13 @@ do
     echo "Configure options: $CONFIGURE_OPTIONS"
 
     echo "Configuring ffmpeg for $ARCH..."
-    ./configure --cc="$CC" --as="$SCRIPT_DIR/gas-preprocessor.pl $AS" --nm="$NM" --sysroot=$SYSROOT $EXTRA_FLAGS --extra-ldflags="$EXTRA_LDFLAGS" --extra-cflags="$EXTRA_CFLAGS" --prefix="dist" $CONFIGURE_OPTIONS
+    ./configure --cc="$CC" --as="$SCRIPT_DIR/gas-preprocessor.pl $AS" --nm="$NM" --sysroot=$SYSROOT $EXTRA_FLAGS --extra-ldflags="$EXTRA_LDFLAGS" --extra-cflags="$EXTRA_CFLAGS" --prefix=$DIST_DIR $CONFIGURE_OPTIONS
 
     echo "Installing ffmpeg for $ARCH..."
     make && make install
 
-    echo "Installed: $FFMPEG_DIR/dist"
     cd $SCRIPT_DIR
+
+    rm -rf $DIST_DIR/bin
+    rm -rf $DIST_DIR/share
 done

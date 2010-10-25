@@ -1,0 +1,11 @@
+*.gz
+*-armv6/
+*-armv7/
+*-i386/
+ffmpeg/
+speex/
+ogg/
+lame/
+vorbis/
+ffmpeg-conf
+build-local

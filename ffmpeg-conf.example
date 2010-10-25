@@ -16,7 +16,7 @@ CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-swscale"
 CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-avfilter"
 
 # Setup the decoders
-CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-decoders" 
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-decoders"
 
 # Setup the encoders
 CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-encoders"
@@ -26,21 +26,23 @@ CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-encoder=mpeg4"
 #CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-encoder=libvpx"
 
 CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-encoder=pcm_mulaw"
-#CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-encoder=libvorbis"
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-encoder=pcm_s16le"
 CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-encoder=libmp3lame"
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-encoder=libspeex"
+#CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-encoder=libvorbis"
 
 # No HW Acceleration on the iPhone
 CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-hwaccels"
 
 # Configure the muxers
 CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-muxers"
-CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-muxer=rawvideo"
+#CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-muxer=rawvideo"
 #CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-muxer=ffm"
 #CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-muxer=swf"
 CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-muxer=flv"
 CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-muxer=avi"
-CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-muxer=h264"
-CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-muxer=mp4"
+#CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-muxer=h264"
+#CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-muxer=mp4"
 #CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-muxer=ogg"
 #CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-muxer=m4v"
 #CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-muxer=mpegts"
