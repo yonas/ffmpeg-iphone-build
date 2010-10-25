@@ -2,60 +2,43 @@
 
 set -e
 
-LIBS="ffmpeg x264 xvid lame vorbis ogg vpx"
-
 ARCHS="armv6 armv7 i386"
 
-
-for LIBRARY in $LIBS
+for ARCH in $ARCHS
 do
-
-    # Find an arch that exists
-    for ARCH in $ARCHS
-    do
-        if [ -d $LIBRARY-$ARCH ]
-        then
-            MAIN_ARCH=$ARCH
-        fi
-    done
-
-    if [ -z "$MAIN_ARCH" ]
-    then
-        continue
-    fi
-
-    if [ ! -d $LIBRARY-$MAIN_ARCH/dist/lib ]
-    then
-        continue
-    fi
-
-    OUTPUT_DIR="$LIBRARY-uarch"
-
-    mkdir -p $OUTPUT_DIR/lib $OUTPUT_DIR/include $OUTPUT_DIR/share
-
-    for LIB in $LIBRARY-$MAIN_ARCH/dist/lib/*.a
-    do
-        LIB=`basename $LIB`
-        LIPO_CREATE=""
-        for ARCH in $ARCHS
-        do
-            if [ -d $LIBRARY-$ARCH ]
-            then
-                LIPO_CREATE="$LIPO_CREATE-arch $ARCH $LIBRARY-$ARCH/dist/lib/$LIB "
-            fi
-        done
-        OUTPUT="$OUTPUT_DIR/lib/$LIB"
-        echo "Creating: $OUTPUT"
-        lipo -create $LIPO_CREATE -output $OUTPUT
-        lipo -info $OUTPUT
-    done
-
-    echo "Copying headers from $LIBRARY-$MAIN_ARCH..."
-    cp -R $LIBRARY-$MAIN_ARCH/dist/include/* $OUTPUT_DIR/include
-
-    if [ -d $LIBRARY-$MAIN_ARCH/dist/share ]
-    then
-        echo "Copying share from $LIBRARY-$MAIN_ARCH..."
-        cp -R $LIBRARY-$MAIN_ARCH/dist/share/* $OUTPUT_DIR/share
-    fi
+  if [ -d $LIBRARY-$ARCH ]
+  then
+    MAIN_ARCH=$ARCH
+  fi
 done
+
+if [ -z "$MAIN_ARCH" ]
+then
+  continue
+fi
+
+
+OUTPUT_DIR="dist-uarch"
+
+mkdir -p $OUTPUT_DIR/lib $OUTPUT_DIR/include
+
+for LIB in dist-$MAIN_ARCH/lib/*.a
+do
+  LIB=`basename $LIB`
+  LIPO_CREATE=""
+  for ARCH in $ARCHS
+  do
+    if [ -d dist-$ARCH ]
+    then
+      LIPO_CREATE="$LIPO_CREATE-arch $ARCH dist-$ARCH/lib/$LIB "
+    fi
+  done
+  OUTPUT="$OUTPUT_DIR/lib/$LIB"
+  echo "Creating: $OUTPUT"
+  lipo -create $LIPO_CREATE -output $OUTPUT
+  lipo -info $OUTPUT
+done
+
+echo "Copying headers from dist-$MAIN_ARCH..."
+cp -R dist-$MAIN_ARCH/include/* $OUTPUT_DIR/include
+
