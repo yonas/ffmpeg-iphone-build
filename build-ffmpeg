@@ -27,6 +27,12 @@ do
     cp -a ffmpeg $FFMPEG_DIR
 
     cd $FFMPEG_DIR
+
+    for i in $SCRIPT_DIR/patches/ffmpeg/*
+    do
+        patch -p0 < $i
+    done
+
     DIST_DIR=$DIST_DIR_BASE-$ARCH
     mkdir -p $DIST_DIR
 
