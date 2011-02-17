@@ -17,9 +17,6 @@ CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-static"
 #CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libfaac"
 CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-stripping"
 
-# Enable support for lyrics
-#CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-lyrics"
-
 # Turn off the binaries
 CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-ffplay"
 CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-ffprobe"
