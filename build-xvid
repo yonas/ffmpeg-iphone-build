@@ -35,8 +35,10 @@ do
 
     FLAGS="-arch $ARCH -isysroot $SYSROOT"
 
+    echo "Configuring xvid for $ARCH..."
     CC=$CC LDFLAGS=$FLAGS CFLAGS=$FLAGS ./configure --prefix=$DIST_DIR $EXTRA_FLAGS
 
+    echo "Installing xvid for $ARCH..."
     make && make install
 
     cd $SCRIPT_DIR
