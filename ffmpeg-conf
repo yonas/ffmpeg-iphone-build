@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# Reset the config options
+CONFIGURE_OPTIONS=""
+
+# Break the LGPL
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-gpl"
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-nonfree"
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-postproc"
+
+# Enable the features we need
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-swscale"
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-avfilter"
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-avfilter"
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-shared"
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-static"
+#CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libfaac"
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-stripping"
+
+# Enable support for lyrics
+#CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-lyrics"
+
+# Turn off the binaries
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-ffplay"
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-ffprobe"
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-ffserver"
+CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --disable-debug"
