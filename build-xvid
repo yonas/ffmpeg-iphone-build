@@ -11,9 +11,9 @@ SCRIPT_DIR=$( (cd -P $(dirname $0) && pwd) )
 for ARCH in $ARCHS
 do
 
-    DIR="xvid-$ARCH"
+    DIR="xvidcore-$ARCH"
     rm -rf $DIR
-    cp -a xvid $DIR
+    cp -a xvidcore $DIR
 
     cd $DIR
     DIST_DIR=$DIST_DIR_BASE-$ARCH

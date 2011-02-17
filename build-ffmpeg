@@ -51,7 +51,7 @@ do
     fi
 
     # Add xvid if exists
-    if [ -f "$DIST_DIR/lib/libxvid.a" ]; then
+    if [ -f "$DIST_DIR/lib/libxvidcore.a" ]; then
         CONFIGURE_OPTIONS="$CONFIGURE_OPTIONS --enable-libxvid"
     fi
 
