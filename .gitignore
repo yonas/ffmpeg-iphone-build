@@ -8,5 +8,3 @@ speex/
 ogg/
 lame/
 vorbis/
-ffmpeg-conf
-build-local
