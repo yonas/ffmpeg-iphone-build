@@ -1,5 +1,5 @@
 FFmpeg4iPhone - The Next Generation! 
-Build scripts for ffmpeg on iPhone SDK 4.x (and iPhone Simulator SDK).
+Build scripts for ffmpeg on iPhone SDK 4.2 (and iPhone Simulator SDK).
 
 ## Scripts 
 
