@@ -24,9 +24,9 @@ To make lipo'able libraries, you need to use gcc-4.2 with extra cflags instead o
 
 The armv6 arch doesn't seem to be working properly so you can force building via armv7 on your 3GS until we figure that out.
 
-## X264
+## X264, Xvid, Vorbis
 
-For x264 support in ffmpeg, run those build scripts first, and the ffmpeg build scripts will include it.
+For x264, Xvid, and Vorbis support in ffmpeg, run those build scripts first, and the ffmpeg build scripts will include it.
 
 ## Gas preprocessor
 
