@@ -8,7 +8,7 @@ Build scripts for ffmpeg on iPhone SDK 4.x (and iPhone Simulator SDK).
 
 - `build-x264`: x264 build scripts; Run these before normal build script to include x264 support
 - `build-xvid`: xvid build scripts; Run these before normal build script to include xvid support
-- `build-vorbis`: xvid build scripts; Run these before normal build script to include xvid support
+- `build-vorbis`: vorbis build scripts; Run these before normal build script to include vorbis support
 
 You can set the ARCHS environment variable to limit which architectues 
 
