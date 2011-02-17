@@ -1,4 +1,4 @@
-Build scripts for ffmpeg on iPhone SDK 3.0 (and iPhone Simulator SDK).
+Build scripts for ffmpeg on iPhone SDK 4.x (and iPhone Simulator SDK).
 
 ## Scripts 
 
